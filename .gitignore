@@ -4,10 +4,10 @@ __pycache__/
 *$py.class
 *.jpg
 *.xlsx
-
+PyWhatKit_DB.txtпше
 # C extensions
 *.so
-
+secret.py
 # Distribution / packaging
 .Python
 build/
