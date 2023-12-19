@@ -1,7 +1,7 @@
 import telebot
 import sys
 from secret import TOKEN
-
+import wabot
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -21,6 +21,7 @@ def get_photo(message):
     with open(target_file_name, 'wb') as writer:
         writer.write(file_bytes)
 
+
 @bot.message_handler(content_types=['document'])
 def handle_file(message):
     bot.reply_to(message, 'Табличку получил')
@@ -29,7 +30,7 @@ def handle_file(message):
     downloaded_file = bot.download_file(file_info.file_path)
     with open(file_name, 'wb') as new_file:
         new_file.write(downloaded_file)
-    sys.exit()
+#    wabot.main()
 
 
 bot.polling(none_stop=True)
