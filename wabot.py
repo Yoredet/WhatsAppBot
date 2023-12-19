@@ -2,18 +2,14 @@ import pywhatkit
 from time import sleep
 from xlsxscan import raspisanie
 
-flag = input('Если вы самый прекрасный на свете стоматолог, то введите "да" и энтер, Леша жми любую кнопку').lower()
-
 
 def send_message_inst():
-    for time, mobile in raspisanie.items():
-        message_lesha = f'Добрый день! 🦷 Хочу напомнить, что завтра мы ждём Вас в {time}. Стоматология «РЖД Медицина» 2 этаж, 201 кабинет. С ув. Врач-стоматолог Лебедевич А.Д.✨'
-        message_nastya = f'Добрый день! 🦷 Хочу напомнить, что завтра мы ждём Вас в {time}. Стоматология «РЖД Медицина» 2 этаж, 204 кабинет. С ув. Врач-стоматолог Лебедевич А.В.✨'
-        if flag == "да":
-            pywhatkit.sendwhatmsg_instantly(phone_no=mobile, message=message_nastya)
-            sleep(5)
-        else:
-            pywhatkit.sendwhatmsg_instantly(phone_no=mobile, message=message_lesha)
+    for fio_doctor, graphic in raspisanie.items():
+        for time, phone in graphic.items():
+            message = f'Добрый день! 🦷 Хочу напомнить, что завтра мы ждём Вас в {time}. Стоматология «РЖД Медицина» 2 этаж, 201 кабинет. С ув. Врач-стоматолог {fio_doctor}.✨'
+            pywhatkit.sendwhatmsg_instantly(phone_no=graphic[phone],
+                                            message=message,
+                                            tab_close=True)
             sleep(5)
 
 
