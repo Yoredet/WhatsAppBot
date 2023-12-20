@@ -1,6 +1,6 @@
 import pywhatkit
 from time import sleep
-from xlsxscan import raspisanie, filename
+from telegrambot import raspisanie, filename
 import os
 
 
@@ -12,12 +12,9 @@ def send_message_inst():
                                             message=message,
                                             tab_close=True)
             sleep(5)
-
-
-def main():
-    send_message_inst()
     if os.path.isfile(filename):
         os.remove(filename)
 
 
-
+def main():
+    send_message_inst()
