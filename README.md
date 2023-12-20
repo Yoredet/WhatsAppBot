@@ -3,7 +3,7 @@
 # Инструкция:
 1. Создать и активировать виртуальное окружение
 2. Установить расширения: pip install -r requirements
-3. В Chrome browser залогинится в WhatsApp Web
+3. В Chrome browser залогиниться в WhatsApp Web
 4. Создать в корневой папке проекта файл secret.py 
     со строкой TOKEN = "здесь токен вашего бота"
 5. Запустить telegrambot.py
