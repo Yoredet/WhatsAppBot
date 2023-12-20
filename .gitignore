@@ -5,6 +5,7 @@ __pycache__/
 *.jpg
 *.xlsx
 PyWhatKit_DB.txt
+.~lock.Книга1.xlsx#
 # C extensions
 *.so
 secret.py
