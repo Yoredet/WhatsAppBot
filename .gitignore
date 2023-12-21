@@ -4,8 +4,13 @@ __pycache__/
 *$py.class
 *.jpg
 *.xlsx
-PyWhatKit_DB.txt
+*.txt
 .~lock.Книга1.xlsx#
+secret.py
+test.py
+wabot.py
+xlsxscan.py
+jpegscan.py
 # C extensions
 *.so
 secret.py
