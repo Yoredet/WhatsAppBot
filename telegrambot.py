@@ -1,16 +1,19 @@
 import openpyxl as op
 import os
 from pprint import pprint
-import re
 import pywhatkit
+import re
 from secret import TOKEN
 import telebot
 from time import sleep
 
 
+# Токен вашего бота
 bot = telebot.TeleBot(TOKEN)
+raspisanie = {}
 
 
+# Получение картинки
 @bot.message_handler(content_types=['photo'])
 def get_photo(message):
     bot.reply_to(message, 'Понял, принял')
@@ -23,6 +26,7 @@ def get_photo(message):
         writer.write(file_bytes)
 
 
+# Получение документа
 @bot.message_handler(content_types=['document'])
 def handle_file(message):
     global file_name
@@ -39,6 +43,7 @@ def handle_file(message):
 bot.polling()
 
 
+# Парсинг файла
 def parsing_file():
     wb = op.load_workbook(file_name, data_only=True)
     sheet = wb.active
@@ -61,18 +66,16 @@ def parsing_file():
             raspisanie[fio_doctor][time] = phone
     flag_dubl = ''
 
-    for fio, graphic in raspisanie.items():
+    for fio, graphic in raspisanie.items():  
+        flag_dubl = ''
+        to_del_list = []
         for time, phone in graphic.items():
             if phone == flag_dubl:
-                del graphic[time]
+                to_del_list.append(time)
             else:
                 flag_dubl = phone
-
-
-raspisanie = {}
-
-parsing_file()
-pprint(raspisanie)
+        for i in to_del_list:
+            del graphic[i]
 
 
 def send_message_inst():
@@ -86,7 +89,9 @@ def send_message_inst():
 
 
 def main():
+    parsing_file()
     send_message_inst()
+    pprint(raspisanie)
     if os.path.isfile(file_name):
         os.remove(file_name)
 
