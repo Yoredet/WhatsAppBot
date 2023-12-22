@@ -2,8 +2,9 @@ import openpyxl as op
 import os
 from pprint import pprint
 import pywhatkit
+from random import randint
 import re
-from secret import TOKEN
+from secret import TOKEN, message_list
 import telebot
 from time import sleep
 
@@ -53,7 +54,9 @@ def parsing_file():
         phone_number = sheet.cell(row=i, column=20).value
         yes_no_flag = sheet.cell(row=i, column=4).value
         fio = str(sheet.cell(row=i, column=15).value)
-        fio_doctor = re.sub(r'[^\w\s]+|[\d]+', r'', fio).strip().title()
+        fio_doctor = (re.sub(r'[^\w\s]+|[\d]+', r'', fio).strip().
+                      title().replace('h', 'н'))
+        fio_doctor = ' '.join(fio_doctor.split()[:3])
         if not time or yes_no_flag == 'ДА' or not phone_number or \
                 phone_number[3] != '9' or len(phone_number) != 17:
             continue
@@ -66,7 +69,7 @@ def parsing_file():
             raspisanie[fio_doctor][time] = phone
     flag_dubl = ''
 
-    for fio, graphic in raspisanie.items():  
+    for fio, graphic in raspisanie.items():
         flag_dubl = ''
         to_del_list = []
         for time, phone in graphic.items():
@@ -81,7 +84,9 @@ def parsing_file():
 def send_message_inst():
     for fio_doctor, graphic in raspisanie.items():
         for time, phone in graphic.items():
-            message = f'Добрый день! 🦷 Хочу напомнить, что завтра мы ждём Вас в {time}. Стоматология «РЖД Медицина» 2 этаж, 201 кабинет. С уважением Врач-стоматолог {fio_doctor}.✨'
+            sluchai = randint(1, 3)
+            message = message_list[sluchai].format(time, fio_doctor)
+#            message = f'Добрый день! 🦷 Хочу напомнить, что завтра мы ждём Вас в {time}. Стоматология «РЖД Медицина» 2 этаж, 201 кабинет. С уважением Врач-стоматолог {fio_doctor}.✨'
             pywhatkit.sendwhatmsg_instantly(phone_no=phone,
                                             message=message,
                                             tab_close=True)
