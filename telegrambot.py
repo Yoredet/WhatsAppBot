@@ -1,15 +1,17 @@
+from dotenv import load_dotenv
 import openpyxl as op
 import os
 from pprint import pprint
 import pywhatkit
 from random import randint
 import re
-from secret import TOKEN, message_list
+from secret import message_list
 import telebot
 from time import sleep
 
-
+load_dotenv()
 # Токен вашего бота
+TOKEN = os.getenv('TOKEN')
 bot = telebot.TeleBot(TOKEN)
 raspisanie = {}
 
@@ -44,8 +46,10 @@ def handle_file(message):
 bot.polling()
 
 
-# Парсинг файла
 def parsing_file():
+    '''
+    Парсинг файла
+    '''
     wb = op.load_workbook(file_name, data_only=True)
     sheet = wb.active
     max_rows = sheet.max_row
@@ -82,6 +86,9 @@ def parsing_file():
 
 
 def send_message_inst():
+    '''
+    Передача данных боту для отправки
+    '''
     for fio_doctor, graphic in raspisanie.items():
         for time, phone in graphic.items():
             sluchai = randint(1, 3)
@@ -94,8 +101,8 @@ def send_message_inst():
 
 def main():
     parsing_file()
-    send_message_inst()
     pprint(raspisanie)
+    send_message_inst()
     if os.path.isfile(file_name):
         os.remove(file_name)
 

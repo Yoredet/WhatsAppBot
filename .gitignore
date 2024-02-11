@@ -5,6 +5,7 @@ __pycache__/
 *.jpg
 *.xlsx
 *.txt
+.env
 .~lock.Книга1.xlsx#
 secret.py
 test.py
